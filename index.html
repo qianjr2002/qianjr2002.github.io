@@ -1,12 +1,799 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 
 <head>
-    <title>My Website</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qianjr2002 - Personal Homepage</title>
+    <style>
+        /* ===== Reset & Base ===== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-hover: #334155;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --accent2: #818cf8;
+            --accent3: #f472b6;
+            --border: rgba(255, 255, 255, 0.08);
+            --radius: 16px;
+            --shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial,
+                sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ===== Animated Background ===== */
+        .bg-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-glow::before,
+        .bg-glow::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            animation: floatGlow 12s ease-in-out infinite;
+        }
+
+        .bg-glow::before {
+            width: 600px;
+            height: 600px;
+            background: var(--accent);
+            top: -200px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .bg-glow::after {
+            width: 500px;
+            height: 500px;
+            background: var(--accent2);
+            bottom: -150px;
+            right: -100px;
+            animation-delay: -6s;
+        }
+
+        @keyframes floatGlow {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(60px, -40px) scale(1.15);
+            }
+            50% {
+                transform: translate(30px, 40px) scale(0.95);
+            }
+            75% {
+                transform: translate(-40px, -20px) scale(1.1);
+            }
+        }
+
+        /* ===== Layout ===== */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        /* ===== Navigation ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 16px 0;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        nav .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        nav .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        nav .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        nav .nav-links a:hover {
+            color: var(--text);
+        }
+
+        nav .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* ===== Hero Section ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 650px;
+        }
+
+        .hero-greeting {
+            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent);
+            background: rgba(56, 189, 248, 0.1);
+            padding: 6px 16px;
+            border-radius: 50px;
+            margin-bottom: 24px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 50%, var(--accent3) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 400;
+        }
+
+        .hero .poem {
+            font-size: 1rem;
+            color: var(--text-muted);
+            opacity: 0.7;
+            font-style: italic;
+            margin-bottom: 36px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(56, 189, 248, 0.45);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(56, 189, 248, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* ===== About Section ===== */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-title .accent {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            margin-bottom: 48px;
+            font-size: 1.05rem;
+            max-width: 550px;
+        }
+
+        /* ===== Cards ===== */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+
+        .card h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        /* ===== Skills Section ===== */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            padding: 8px 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text);
+            transition: var(--transition);
+            cursor: default;
+        }
+
+        .skill-tag:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(56, 189, 248, 0.08);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.15);
+        }
+
+        /* ===== Projects Section ===== */
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px 32px;
+            transition: var(--transition);
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .project-card:hover {
+            background: var(--bg-card-hover);
+            transform: translateX(6px);
+            box-shadow: var(--shadow);
+            border-color: rgba(56, 189, 248, 0.2);
+        }
+
+        .project-card .project-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .project-card .folder-icon {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .project-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .project-card h3 a {
+            color: var(--text);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .project-card h3 a:hover {
+            color: var(--accent);
+        }
+
+        .project-card .project-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 14px;
+        }
+
+        .project-card .project-meta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .project-card .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .project-card .meta-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* ===== Contact Section ===== */
+        .contact-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .contact-link:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .contact-link .link-icon {
+            font-size: 1.3rem;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        footer .heart {
+            color: var(--accent3);
+            animation: heartbeat 1.5s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes heartbeat {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            25% {
+                transform: scale(1.2);
+            }
+            50% {
+                transform: scale(1);
+            }
+            75% {
+                transform: scale(1.2);
+            }
+        }
+
+        /* ===== Fade In Animation ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .fade-in:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+        .fade-in:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+        .fade-in:nth-child(4) {
+            animation-delay: 0.45s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero .subtitle {
+                font-size: 1.05rem;
+            }
+            section {
+                padding: 60px 0;
+            }
+            .hero {
+                min-height: auto;
+                padding: 120px 0 60px;
+            }
+            nav .nav-links {
+                gap: 16px;
+            }
+            nav .nav-links a {
+                font-size: 0.8rem;
+            }
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            .project-card:hover {
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .hero-buttons {
+                flex-direction: column;
+            }
+            .btn {
+                justify-content: center;
+            }
+            nav .nav-links {
+                gap: 10px;
+            }
+        }
+
+        /* ===== Selection ===== */
+        ::selection {
+            background: rgba(56, 189, 248, 0.3);
+            color: #fff;
+        }
+
+        /* ===== Scrollbar ===== */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--bg-card-hover);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Hello World</h1>
+    <div class="bg-glow"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="#" class="logo">Qianjr</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-greeting fade-in">👋 Hello, Welcome!</div>
+                <h1 class="fade-in">
+                    Hi, I'm <span class="gradient-text">Qianjr</span>
+                </h1>
+                <p class="subtitle fade-in">
+                    Developer · Open Source Enthusiast · Lifelong Learner
+                </p>
+                <p class="poem fade-in">
+                    "海内存知己，天涯若比邻"
+                </p>
+                <div class="hero-buttons fade-in">
+                    <a href="https://github.com/qianjr2002" class="btn btn-primary" target="_blank" rel="noopener">
+                        ⭐ View My GitHub
+                    </a>
+                    <a href="#contact" class="btn btn-outline">
+                        ✉️ Get in Touch
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title fade-in">
+                <span class="accent">01.</span> About Me
+            </h2>
+            <p class="section-desc fade-in">
+                A brief introduction about who I am and what drives me.
+            </p>
+            <div class="card-grid">
+                <div class="card fade-in">
+                    <div class="card-icon">💻</div>
+                    <h3>Software Development</h3>
+                    <p>
+                        Passionate about building elegant, efficient software solutions.
+                        I enjoy turning complex problems into simple, beautiful code.
+                    </p>
+                </div>
+                <div class="card fade-in">
+                    <div class="card-icon">🌐</div>
+                    <h3>Open Source</h3>
+                    <p>
+                        Believer in the power of open source. I love contributing to
+                        projects that make a positive impact on the developer community.
+                    </p>
+                </div>
+                <div class="card fade-in">
+                    <div class="card-icon">📚</div>
+                    <h3>Continuous Learning</h3>
+                    <p>
+                        Technology never stops evolving, and neither do I. Always exploring
+                        new tools, frameworks, and best practices.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title fade-in">
+                <span class="accent">02.</span> Skills & Tech
+            </h2>
+            <p class="section-desc fade-in">
+                Technologies and tools I work with on a daily basis.
+            </p>
+            <div class="skills-grid fade-in">
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">TypeScript</span>
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">Java</span>
+                <span class="skill-tag">HTML & CSS</span>
+                <span class="skill-tag">React</span>
+                <span class="skill-tag">Node.js</span>
+                <span class="skill-tag">Git</span>
+                <span class="skill-tag">GitHub Actions</span>
+                <span class="skill-tag">VS Code</span>
+                <span class="skill-tag">Docker</span>
+                <span class="skill-tag">Linux</span>
+                <span class="skill-tag">SQL</span>
+                <span class="skill-tag">REST APIs</span>
+                <span class="skill-tag">Markdown</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title fade-in">
+                <span class="accent">03.</span> Featured Projects
+            </h2>
+            <p class="section-desc fade-in">
+                Some of the things I've built and contributed to.
+            </p>
+
+            <div class="project-card fade-in">
+                <div class="project-header">
+                    <span class="folder-icon">📁</span>
+                    <h3>
+                        <a href="https://github.com/qianjr2002/qianjr2002.github.io" target="_blank" rel="noopener">
+                            qianjr2002.github.io
+                        </a>
+                    </h3>
+                </div>
+                <p class="project-desc">
+                    My personal website and GitHub Pages homepage. Built with pure HTML, CSS,
+                    featuring a modern dark theme with smooth animations.
+                </p>
+                <div class="project-meta">
+                    <span class="meta-item">
+                        <span class="meta-dot" style="background:#e34c26;"></span> HTML
+                    </span>
+                    <span class="meta-item">
+                        <span class="meta-dot" style="background:#563d7c;"></span> CSS
+                    </span>
+                    <span class="meta-item">⭐ GitHub Pages</span>
+                </div>
+            </div>
+
+            <div class="project-card fade-in" style="text-align:center; padding: 40px 32px;">
+                <p style="color: var(--text-muted); margin-bottom: 16px;">
+                    🚀 More exciting projects coming soon!
+                </p>
+                <a href="https://github.com/qianjr2002?tab=repositories" class="btn btn-outline" target="_blank" rel="noopener">
+                    View All Repositories →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title fade-in">
+                <span class="accent">04.</span> Get in Touch
+            </h2>
+            <p class="section-desc fade-in">
+                I'm always open to new opportunities, collaborations, and conversations.
+                Feel free to reach out!
+            </p>
+            <div class="contact-links fade-in">
+                <a href="https://github.com/qianjr2002" class="contact-link" target="_blank" rel="noopener">
+                    <span class="link-icon">🐙</span> GitHub
+                </a>
+                <a href="mailto:qianjr2002@gmail.com" class="contact-link">
+                    <span class="link-icon">📧</span> Email
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>
+                Built with <span class="heart">❤️</span> by Qianjr &copy; 2025
+            </p>
+            <p style="margin-top: 6px;">
+                海内存知己，天涯若比邻
+            </p>
+        </div>
+    </footer>
 </body>
 
 </html>
