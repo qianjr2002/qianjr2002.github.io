@@ -32,7 +32,7 @@
 ### 🔗 Connect With Me
 
 - 🐙 [GitHub](https://github.com/qianjr2002)
-- 📧 [Email](mailto:qianjr2002@gmail.com)
+- 📧 [Email](mailto:qianjr2002@163.com)
 
 ---
 
